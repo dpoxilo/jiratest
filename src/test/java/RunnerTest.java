@@ -1,17 +1,17 @@
-import Hooks.WebHooks;
+import WebHooks.WebHooks;
 import org.junit.jupiter.api.Test;
 
-import static StepDefinition.FourthPageSteps.*;
-import static StepDefinition.LoginFormSteps.authorizeAssertion;
-import static StepDefinition.LoginFormSteps.login;
-import static StepDefinition.SecondPageSteps.*;
-import static StepDefinition.ThirdPageSteps.*;
+import static StepsDescription.TaskStatusPageSteps.*;
+import static StepsDescription.LoginSteps.authorizeAssertion;
+import static StepsDescription.LoginSteps.login;
+import static StepsDescription.MainPageSteps.*;
+import static StepsDescription.TaskNewPageSteps.*;
 import static com.codeborne.selenide.Selenide.open;
 
 public class RunnerTest extends WebHooks {
     //Авторизация
     @Test
-    public void testLoginForm() {
+    public void testLoginPage() {
         open("https://edujira.ifellow.ru/");
         login();
         authorizeAssertion();
@@ -19,7 +19,7 @@ public class RunnerTest extends WebHooks {
 
     //Переход в проект TestProject и задачу TestSelenium
     @Test
-    public void testSecondPage() {
+    public void testMainPage() {
         open("https://edujira.ifellow.ru/");
         login();
         authorizeAssertion();
@@ -30,12 +30,12 @@ public class RunnerTest extends WebHooks {
         findTaskTestSelenium();
         checkingStatus();
         checkingVersion();
-        secondPageAssertion();
+        mainPageAssertion();
     }
 
     //Новый баг с заполнением
     @Test
-    public void testThirdPage() {
+    public void testTaskNewPage() {
         open("https://edujira.ifellow.ru/");
         login();
         authorizeAssertion();
@@ -43,23 +43,32 @@ public class RunnerTest extends WebHooks {
         setIssueType();
         setErrorTheme();
         setErrInfo();
-        setOption();
+        setFixInVersions();
         setPriority();
         setHashTag();
         setMoreInfo();
+        setVersionsAffected();
         clickToAssignMe();
         clickSubmit();
-        thirdPageAssertion();
+        taskNewPageAssertion();
     }
+
     //Изменения статуса задачи
     @Test
-    public void testFourthPage() {
+    public void testTaskStatusPage() {
         open("https://edujira.ifellow.ru/");
         login();
         authorizeAssertion();
         clickToFindTask();
         clickToCheckStatus();
         clickToSetReady();
-        clickToCheckFinalStatus();
+//      проверка через цикл while
+//      checkFinalStatus1();
+
+//      проверка через switch case
+        checkFinalStatus2();
+
+//      проверка через shouldHave
+        checkFinalStatus3();
     }
 }
